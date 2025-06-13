@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getPasswordEntries } from "../api/passwords";
 import { FaEye, FaEyeSlash, FaCopy, FaEdit, FaTrash } from "react-icons/fa";
-import "./PasswordVault.css";
 
 const PasswordVault = () => {
   const [entries, setEntries] = useState([]);
@@ -31,60 +30,84 @@ const PasswordVault = () => {
   };
 
   return (
-    <div className="password-vault">
-      <h2 className="vault-header">My Saved Passwords</h2>
+    <div className="max-w-5xl mx-auto px-4 py-8 font-sans">
+      <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+        My Saved Passwords
+      </h2>
 
       {loading ? (
-        <div className="loading">Loading...</div>
+        <div className="text-center text-gray-600">Loading...</div>
       ) : entries.length > 0 ? (
-        <div className="vault-table-container">
-          <table className="vault-table">
-            <thead>
+        <div className="overflow-x-auto bg-white shadow rounded-lg">
+          <table className="w-full text-left table-auto border-collapse">
+            <thead className="bg-gray-100 text-gray-700 text-sm">
               <tr>
-                <th>Application</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Actions</th>
+                <th className="px-4 py-3 border-b">Application</th>
+                <th className="px-4 py-3 border-b">Username</th>
+                <th className="px-4 py-3 border-b">Password</th>
+                <th className="px-4 py-3 border-b text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
               {entries.map((entry) => (
-                <tr key={entry.id}>
-                  <td>{entry.app_name}</td>
-                  <td>{entry.username || "-"}</td>
-                  <td className="password-cell">
-                    {visiblePasswords[entry.id] ? (
-                      <span className="password-text">{entry.password}</span>
-                    ) : (
-                      <span className="password-mask">••••••••</span>
-                    )}
-                    <button
-                      className="icon-btn visibility-btn"
-                      onClick={() => togglePasswordVisibility(entry.id)}
-                      aria-label={
-                        visiblePasswords[entry.id]
-                          ? "Hide password"
-                          : "Show password"
-                      }
-                    >
-                      {visiblePasswords[entry.id] ? <FaEyeSlash /> : <FaEye />}
-                    </button>
-                    <button
-                      className="reveal-btn"
-                      onClick={() =>
-                        navigator.clipboard.writeText(entry.password)
-                      }
-                    >
-                      <FaCopy />
-                    </button>
+                <tr key={entry.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-3 border-b text-sm text-gray-700">
+                    {entry.app_name}
                   </td>
-                  <td>
-                    <button className="action-btn edit-btn">
-                      <FaEdit />
-                    </button>
-                    <button className="action-btn delete-btn">
-                      <FaTrash />
-                    </button>
+                  <td className="px-4 py-3 border-b text-sm text-gray-700">
+                    {entry.username || "-"}
+                  </td>
+                  <td className="px-4 py-3 border-b text-sm text-gray-700">
+                    <div className="flex items-center gap-2">
+                      <span className="truncate">
+                        {visiblePasswords[entry.id]
+                          ? entry.password
+                          : "••••••••"}
+                      </span>
+                      <button
+                        className="text-gray-500 hover:text-gray-800"
+                        onClick={() => togglePasswordVisibility(entry.id)}
+                        aria-label={
+                          visiblePasswords[entry.id]
+                            ? "Hide password"
+                            : "Show password"
+                        }
+                      >
+                        {visiblePasswords[entry.id] ? (
+                          <FaEyeSlash />
+                        ) : (
+                          <FaEye />
+                        )}
+                      </button>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 border-b text-sm text-center">
+                    <div className="flex justify-center gap-3">
+                      <button
+                        title = "Copy Password"
+                        className="text-blue-500 hover:text-blue-700"
+                        onClick={() =>
+                          navigator.clipboard.writeText(entry.password)
+                        }
+                        aria-label="Copy password"
+                      >
+                        <FaCopy />
+                      </button>
+                      <button
+                        title = "edit username/app_name"
+                        className="text-yellow-500 hover:text-yellow-700"
+                        aria-label="Edit"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        title = "delete entry"
+                        className="text-red-500 hover:text-red-700"
+                        aria-label="Delete"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -92,7 +115,9 @@ const PasswordVault = () => {
           </table>
         </div>
       ) : (
-        <div className="no-entries">No password entries found.</div>
+        <div className="text-center text-gray-500 mt-4">
+          No password entries found.
+        </div>
       )}
     </div>
   );
