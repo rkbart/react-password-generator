@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { getPasswordEntries } from "../api/passwords";
+import { getPasswordEntries, updatePasswordEntry } from "../api/passwords";
 import { FaEye, FaEyeSlash, FaCopy, FaEdit, FaTrash } from "react-icons/fa";
+import EditEntryModal from "./EditEntryModal";
 
 const PasswordVault = () => {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visiblePasswords, setVisiblePasswords] = useState({});
-
+  const [editingEntry, setEditingEntry] = useState(null);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,6 +29,25 @@ const PasswordVault = () => {
       ...prev,
       [id]: !prev[id],
     }));
+  };
+
+  const handleEditClick = (entry) => {
+    setEditingEntry(entry);
+  };
+
+  const handleSave = async (updatedData) => {
+    try {
+      await updatePasswordEntry(editingEntry.id, updatedData);
+      
+      setEntries(entries.map(entry => 
+        entry.id === editingEntry.id ? { ...entry, ...updatedData } : entry
+      ));
+      
+      setEditingEntry(null);
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Failed to update entry");
+    }
   };
 
   return (
@@ -97,6 +118,7 @@ const PasswordVault = () => {
                         title = "edit username/app_name"
                         className="text-yellow-500 hover:text-yellow-700"
                         aria-label="Edit"
+                        onClick={() => handleEditClick(entry)}
                       >
                         <FaEdit />
                       </button>
@@ -118,6 +140,14 @@ const PasswordVault = () => {
         <div className="text-center text-gray-500 mt-4">
           No password entries found.
         </div>
+      )}
+
+      {editingEntry && (
+        <EditEntryModal
+          entry={editingEntry}
+          onClose={() => setEditingEntry(null)}
+          onSave={handleSave}
+        />
       )}
     </div>
   );
