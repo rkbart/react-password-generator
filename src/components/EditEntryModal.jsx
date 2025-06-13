@@ -22,7 +22,7 @@ const EditEntryModal = ({ entry, onClose, onSave }) => {
   };
 
   return (
-    <div className="fixed inset-0 backdrop-blur-smInst bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
         <div className="flex justify-between items-center border-b p-4">
           <h3 className="text-lg font-semibold">Edit Entry</h3>
