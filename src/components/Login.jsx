@@ -10,11 +10,8 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await login({ email, password });
-      localStorage.setItem("access-token", res.headers["access-token"]);
-      localStorage.setItem("client", res.headers["client"]);
-      localStorage.setItem("uid", res.headers["uid"]);
-      onLogin();
+      await login({ email, password }); // No need to access headers here
+      onLogin(); // Trigger navigation or UI change
     } catch (err) {
       alert("Login failed. Please check your credentials and try again.");
     } finally {

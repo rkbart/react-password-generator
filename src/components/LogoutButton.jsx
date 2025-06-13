@@ -1,14 +1,11 @@
 import React from "react";
-import { logout, getAuthHeaders } from "../api/auth";
+import { logout } from "../api/auth";
 
 const LogoutButton = ({ onLogout }) => {
   const handleLogout = async () => {
     try {
-      // Get headers before logging out
-      const headers = getAuthHeaders();
-      await logout(headers);
-
-      // Clear tokens
+      await logout(); // headers now handled via axios interceptors
+      // Clear stored auth tokens manually after logout
       localStorage.removeItem("access-token");
       localStorage.removeItem("client");
       localStorage.removeItem("uid");
@@ -24,7 +21,7 @@ const LogoutButton = ({ onLogout }) => {
   return (
     <button
       onClick={handleLogout}
-      
+      className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
     >
       Logout
     </button>
