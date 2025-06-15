@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 import PasswordGenerator from "./components/PasswordGenerator";
 import PasswordVault from "./components/PasswordVault";
 import LogoutButton from "./components/LogoutButton";
-import { getPasswordEntries } from './api/passwords';
+import { getPasswordEntries } from "./api/passwords";
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!localStorage.getItem("access-token")
   );
-
+  const [showLogin, setShowLogin] = useState(true); // 🔁 Toggle between login/signup
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,17 +41,17 @@ function App() {
     setEntries([]); // Clear entries on logout
   };
 
-   useEffect(() => {
+  useEffect(() => {
     if (isLoggedIn) {
       fetchData();
     }
-  }, [isLoggedIn]); 
+  }, [isLoggedIn]);
 
   return (
     <div className="main-container h-full">
       {isLoggedIn ? (
         <>
-          <div className = "flex justify-end p-4 ">
+          <div className="flex justify-end p-4">
             <LogoutButton onLogout={handleLogout} />
           </div>
           <PasswordGenerator setEntries={setEntries} fetchData={fetchData} />
@@ -60,8 +62,10 @@ function App() {
             fetchData={fetchData}
           />
         </>
+      ) : showLogin ? (
+        <Login onLogin={handleLogin} onToggle={() => setShowLogin(false)} />
       ) : (
-        <Login onLogin={handleLogin} />
+        <SignUp onSignUp={handleLogin} onToggle={() => setShowLogin(true)} />
       )}
     </div>
   );
