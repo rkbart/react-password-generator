@@ -1,5 +1,6 @@
 import React from "react";
 import { logout } from "../api/auth";
+import { CiLogout } from "react-icons/ci";
 
 const LogoutButton = ({ onLogout }) => {
   const handleLogout = async () => {
@@ -21,9 +22,10 @@ const LogoutButton = ({ onLogout }) => {
   return (
     <button
       onClick={handleLogout}
-      className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+      className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition cursor-pointer"
+      title="Logout"
     >
-      Logout
+      <CiLogout />
     </button>
   );
 };
