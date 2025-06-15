@@ -136,66 +136,70 @@ const PasswordGenerator = ({ setEntries }) => {
         </div>
 
         {/* Password Card */}
-        {password && (
-          <div className="flex-1 bg-white rounded-lg shadow p-5">
-            <div className="space-y-4">
-              <div className="flex items-center mb-4">
-                <input
-                  type="text"
-                  value={password}
-                  readOnly
-                  className="flex-grow mr-2 px-3 py-2 border border-gray-300 rounded text-sm"
-                />
-                <button
-                  type="button"
-                  onClick={copyToClipboard}
-                  className="flex items-center gap-1 px-3 py-2 border border-gray-300 bg-gray-100 rounded hover:bg-gray-200 text-sm"
-                >
-                  <FaCopy /> Copy
-                </button>
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-600 mb-1">
-                  Application/Service Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Google, Facebook"
-                  value={appName}
-                  onChange={(e) => setAppName(e.target.value)}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-600 mb-1">
-                  Username/Email (Optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="Your username or email"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
-                />
-              </div>
-
+        <div className="flex-1 bg-white rounded-lg shadow p-5">
+          <div className="space-y-4">
+            <div className="flex items-center mb-4">
+              <input
+                type="text"
+                value={password}
+                readOnly
+                placeholder="Generated password will appear here"
+                className="flex-grow mr-2 px-3 py-2 border border-gray-300 rounded text-sm"
+              />
               <button
-                onClick={handleSave}
-                disabled={!password || !appName}
-                className={`w-full mt-2 px-4 py-2 rounded text-white flex items-center justify-center gap-2 ${
-                  !password || !appName
-                    ? "bg-blue-300 cursor-not-allowed"
-                    : "bg-green-600 hover:bg-green-700"
+                type="button"
+                onClick={copyToClipboard}
+                disabled={!password}
+                className={`flex items-center gap-1 px-3 py-2 border rounded text-sm ${
+                  password
+                    ? "bg-gray-100 hover:bg-gray-200 border-gray-300"
+                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
                 }`}
               >
-                <FaSave /> Save Password
+                <FaCopy /> Copy
               </button>
             </div>
+
+            <div>
+              <label className="block text-sm text-gray-600 mb-1">
+                Application/Service Name
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. Google, Facebook"
+                value={appName}
+                onChange={(e) => setAppName(e.target.value)}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm text-gray-600 mb-1">
+                Username/Email (Optional)
+              </label>
+              <input
+                type="text"
+                placeholder="Your username or email"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+              />
+            </div>
+
+            <button
+              onClick={handleSave}
+              disabled={!password || !appName}
+              className={`w-full mt-2 px-4 py-2 rounded text-white flex items-center justify-center gap-2 ${
+                !password || !appName
+                  ? "bg-blue-300 cursor-not-allowed"
+                  : "bg-green-600 hover:bg-green-700"
+              }`}
+            >
+              <FaSave /> Save Password
+            </button>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
