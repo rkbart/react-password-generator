@@ -46,7 +46,7 @@ function App() {
   }, [isLoggedIn]); 
 
   return (
-    <div className="main-container bg-gray-300">
+    <div className="main-container h-full">
       {isLoggedIn ? (
         <>
           <div className = "flex justify-end p-4 ">

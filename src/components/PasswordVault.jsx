@@ -48,7 +48,7 @@ const PasswordVault = ({ entries, loading, setEntries }) => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 font-sans bg-gray-300 rounded-b-lg mb-4">
+    <div className="max-w-5xl mx-auto px-4 py-8 font-sans ">
       <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
         My Saved Passwords
       </h2>
