@@ -105,7 +105,8 @@ const PasswordVault = ({ entries, loading, setEntries }) => {
                         title="Copy Password"
                         className="text-blue-500 hover:text-blue-700 cursor-pointer"
                         onClick={() =>
-                          navigator.clipboard.writeText(entry.password)
+                          {navigator.clipboard.writeText(entry.password);
+                          alert("Password copied to clipboard!");}
                         }
                         aria-label="Copy password"
                       >
