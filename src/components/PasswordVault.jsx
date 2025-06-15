@@ -3,26 +3,11 @@ import { getPasswordEntries, updatePasswordEntry, deletePasswordEntry } from "..
 import { FaEye, FaEyeSlash, FaCopy, FaEdit, FaTrash } from "react-icons/fa";
 import EditEntryModal from "./EditEntryModal";
 
-const PasswordVault = () => {
-  const [entries, setEntries] = useState([]);
-  const [loading, setLoading] = useState(true);
+const PasswordVault = ({ entries, loading, setEntries }) => {
   const [visiblePasswords, setVisiblePasswords] = useState({});
   const [editingEntry, setEditingEntry] = useState(null);
   
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getPasswordEntries();
-        setEntries(response.data);
-      } catch (err) {
-        console.error("Error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  
 
   const togglePasswordVisibility = (id) => {
     setVisiblePasswords((prev) => ({

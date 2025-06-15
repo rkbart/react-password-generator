@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaCopy, FaSave } from "react-icons/fa";
 import { savePasswordEntry } from "../api/passwords";
 
-const PasswordGenerator = () => {
+const PasswordGenerator = ({ setEntries }) => {
   const [length, setLength] = useState(6);
   const [includeUpperCase, setIncludeUpperCase] = useState(true);
   const [includeLowerCase, setIncludeLowerCase] = useState(true);
@@ -50,8 +50,13 @@ const PasswordGenerator = () => {
     }
 
     try {
-      await savePasswordEntry({ password, app_name: appName, username });
+      const response = await savePasswordEntry({ password, app_name: appName, username });
+      setEntries(prev => [...prev, response.data]); // Add the new entry to the list
       alert("Password saved successfully!");
+      // Reset form
+      setPassword("");
+      setAppName("");
+      setUsername("");
     } catch (error) {
       alert("Error saving password");
       console.error("Save error:", error);
