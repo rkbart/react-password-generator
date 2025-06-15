@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getPasswordEntries, updatePasswordEntry } from "../api/passwords";
+import { getPasswordEntries, updatePasswordEntry, deletePasswordEntry } from "../api/passwords";
 import { FaEye, FaEyeSlash, FaCopy, FaEdit, FaTrash } from "react-icons/fa";
 import EditEntryModal from "./EditEntryModal";
 
@@ -33,6 +33,18 @@ const PasswordVault = () => {
 
   const handleEditClick = (entry) => {
     setEditingEntry(entry);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this entry?")) {
+      try {
+        await deletePasswordEntry(id);
+        setEntries(entries.filter(entry => entry.id !== id));
+      } catch (err) {
+        console.error("Error:", err);
+        alert("Failed to delete entry");
+      }
+    }
   };
 
   const handleSave = async (updatedData) => {
@@ -126,6 +138,7 @@ const PasswordVault = () => {
                         title = "delete entry"
                         className="text-red-500 hover:text-red-700"
                         aria-label="Delete"
+                        onClick={() => handleDelete(entry.id)}
                       >
                         <FaTrash />
                       </button>
