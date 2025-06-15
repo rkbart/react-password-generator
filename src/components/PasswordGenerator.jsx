@@ -64,7 +64,7 @@ const PasswordGenerator = ({ setEntries }) => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-5 font-sans">
+    <div className="max-w-5xl mx-auto p-5 font-sans bg-gray-300 rounded-t-lg">
       <h2 className="text-2xl font-semibold text-center mb-8 text-gray-800">
         Password Generator
       </h2>

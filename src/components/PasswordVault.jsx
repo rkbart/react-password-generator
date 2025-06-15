@@ -48,7 +48,7 @@ const PasswordVault = ({ entries, loading, setEntries }) => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 font-sans">
+    <div className="max-w-5xl mx-auto px-4 py-8 font-sans bg-gray-300 rounded-b-lg mb-4">
       <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
         My Saved Passwords
       </h2>
@@ -112,7 +112,7 @@ const PasswordVault = ({ entries, loading, setEntries }) => {
                         <FaCopy />
                       </button>
                       <button
-                        title="edit username/app_name"
+                        title="edit entry"
                         className="text-yellow-500 hover:text-yellow-700 cursor-pointer"
                         aria-label="Edit"
                         onClick={() => handleEditClick(entry)}
