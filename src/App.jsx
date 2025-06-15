@@ -11,35 +11,55 @@ function App() {
 
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
-  const handleLogout = () => {
-    setIsLoggedIn(false);
+
+  const fetchData = async () => {
+    try {
+      const response = await getPasswordEntries();
+      setEntries(response.data);
+    } catch (err) {
+      console.error("Error:", err);
+      if (err.response?.status === 401) {
+        handleLogout(); // Auto-logout if unauthorized
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getPasswordEntries();
-        setEntries(response.data);
-      } catch (err) {
-        console.error("Error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    fetchData(); // Fetch entries immediately after login
+  };
 
-    fetchData();
-  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem("access-token");
+    localStorage.removeItem("client");
+    localStorage.removeItem("uid");
+    setIsLoggedIn(false);
+    setEntries([]); // Clear entries on logout
+  };
+
+   useEffect(() => {
+    if (isLoggedIn) {
+      fetchData();
+    }
+  }, [isLoggedIn]); 
 
   return (
     <div className="main-container">
       {isLoggedIn ? (
         <>
           <LogoutButton onLogout={handleLogout} />
-          <PasswordGenerator setEntries={setEntries} />
-          <PasswordVault entries={entries} loading={loading} setEntries={setEntries} />
+          <PasswordGenerator setEntries={setEntries} fetchData={fetchData} />
+          <PasswordVault 
+            entries={entries} 
+            loading={loading} 
+            setEntries={setEntries} 
+            fetchData={fetchData}
+          />
         </>
       ) : (
-        <Login onLogin={() => setIsLoggedIn(true)} />
+        <Login onLogin={handleLogin} />
       )}
     </div>
   );
