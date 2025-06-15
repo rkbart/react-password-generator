@@ -83,7 +83,7 @@ const PasswordGenerator = ({ setEntries }) => {
                 max="32"
                 value={length}
                 onChange={(e) => setLength(Number(e.target.value))}
-                className="w-full"
+                className="w-full cursor-pointer"
               />
             </div>
 
@@ -128,7 +128,7 @@ const PasswordGenerator = ({ setEntries }) => {
 
             <button
               onClick={generatePassword}
-              className="w-full mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center justify-center gap-2"
+              className="w-full mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center justify-center gap-2 cursor-pointer"
             >
               Generate Password
             </button>

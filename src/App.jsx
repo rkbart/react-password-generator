@@ -49,12 +49,14 @@ function App() {
     <div className="main-container">
       {isLoggedIn ? (
         <>
-          <LogoutButton onLogout={handleLogout} />
+          <div className = "flex justify-end p-4 ">
+            <LogoutButton onLogout={handleLogout} />
+          </div>
           <PasswordGenerator setEntries={setEntries} fetchData={fetchData} />
-          <PasswordVault 
-            entries={entries} 
-            loading={loading} 
-            setEntries={setEntries} 
+          <PasswordVault
+            entries={entries}
+            loading={loading}
+            setEntries={setEntries}
             fetchData={fetchData}
           />
         </>
