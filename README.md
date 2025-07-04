@@ -24,7 +24,6 @@ Backend API built with Ruby on Rails and PostgreSQL for secure password storage 
 📱 Responsive Design
 Clean, responsive UI built with Tailwind CSS.
 
-📂 Project Repositories
 🔗 Frontend (React)	https://github.com/rkbart/react-password-generator
 🔗 Backend (Rails API)	https://github.com/rkbart/password-api
 
