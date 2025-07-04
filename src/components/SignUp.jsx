@@ -1,19 +1,30 @@
 import React, { useState } from "react";
-import { login } from "../api/auth";
+import { signup } from "../api/auth";
 
-const Login = ({ onLogin, onToggle }) => {
+const SignUp = ({ onSignUp, onToggle }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (password !== passwordConfirmation) {
+      alert("Passwords do not match.");
+      return;
+    }
+
     setIsLoading(true);
     try {
-      await login({ email, password });
-      onLogin();
+      await signup({
+        email,
+        password,
+        password_confirmation: passwordConfirmation,
+      });
+      onSignUp();
     } catch (err) {
-      alert("Login failed. Please check your credentials and try again.");
+      alert("Signup failed. Please check your input and try again.");
     } finally {
       setIsLoading(false);
     }
@@ -23,7 +34,7 @@ const Login = ({ onLogin, onToggle }) => {
     <div className="flex justify-center items-center min-h-screen w-full p-5 bg-gray-300">
       <div className="w-full max-w-sm bg-white rounded-lg shadow-md overflow-hidden">
         <div className="p-8">
-          <h2 className="text-center mb-6 text-zinc-800 text-2xl">Login</h2>
+          <h2 className="text-center mb-6 text-zinc-800 text-2xl">Sign Up</h2>
           <form onSubmit={handleSubmit} className="w-full">
             <div className="mb-4">
               <label
@@ -59,6 +70,23 @@ const Login = ({ onLogin, onToggle }) => {
                 required
               />
             </div>
+            <div className="mb-4">
+              <label
+                htmlFor="passwordConfirmation"
+                className="block mb-2 text-zinc-600 text-sm"
+              >
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                className="w-full p-3 border border-zinc-300 rounded text-base focus:outline-none focus:border-blue-500 focus:shadow-[0_0_0_2px_rgba(74,144,226,0.2)]"
+                id="passwordConfirmation"
+                placeholder="Re-enter your password"
+                value={passwordConfirmation}
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
+                required
+              />
+            </div>
             <button
               type="submit"
               className="w-full p-3 bg-blue-500 text-white border-none rounded text-base cursor-pointer mt-2 flex justify-center items-center disabled:bg-blue-300 disabled:cursor-not-allowed hover:bg-blue-600 hover:disabled:bg-blue-300"
@@ -67,30 +95,28 @@ const Login = ({ onLogin, onToggle }) => {
               {isLoading ? (
                 <>
                   <div className="inline-block w-4 h-4 border-2 border-white/30 rounded-full border-t-white animate-spin mr-2"></div>
-                  Logging in...
+                  Signing up...
                 </>
               ) : (
-                "Log In"
+                "Sign Up"
               )}
             </button>
-          </form>
 
-          {/* 🔁 Toggle to Sign Up */}
-          <div className="mt-4 text-center">
-            <p className="text-sm text-zinc-600">
-              Don’t have an account?{" "}
+            <div className="mt-4 text-sm text-center text-zinc-600">
+              Already have an account?{" "}
               <button
+                type="button"
                 onClick={onToggle}
-                className="text-blue-500 hover:underline font-medium"
+                className="text-blue-500 hover:underline focus:outline-none"
               >
-                Sign Up
+                Log in
               </button>
-            </p>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;

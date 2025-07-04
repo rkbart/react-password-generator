@@ -20,22 +20,26 @@ const LogoutButton = ({ onLogout }) => {
     }
   };
 
+  const uid = localStorage.getItem("uid");
+  if (!uid) {
+    return null; // Don't render if not logged in
+  }
+
   return (
     <>
-    <div className= "flex items-center gap-3.5">
-      <div className="flex items-center gap-2 font-semibold">
-        <FaUser /> {localStorage.getItem("uid")}
+      <div className= "flex items-center gap-3.5">
+        <div className="flex items-center gap-2 font-semibold">
+          <FaUser /> {localStorage.getItem("uid")}
+        </div>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition cursor-pointer"
+          title="Logout"
+          >
+          <CiLogout />Logout 
+        </button>
       </div>
-      <button
-        onClick={handleLogout}
-        className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition cursor-pointer"
-        title="Logout"
-        >
-        <CiLogout />Logout 
-      </button>
-    </div>
     </>
-    
   );
 };
 
